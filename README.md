@@ -14,7 +14,7 @@ Demo
 
 You can view a sample installation at:
 
-    http://stevenf.com/dossier-sample
+    <http://stevenf.com/dossier-sample>
 
 Entities and properties
 -----------------------
