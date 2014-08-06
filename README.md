@@ -9,6 +9,10 @@ Overview
 
 This is a rough and early implementation of an idea I had for producing a wiki-like site from a simply structured database of records with freeform key/value pairs.
 
+Conceptually, it’s similar to a relational database, except each record can have any number of fields, and they do not have to be the same fields from record to record. You can even repeat fields on a single record. (Say, for a example if you have a record of a person who has been married multiple times, you could just repeat the “Spouse” property on that record.)
+
+Like a wiki, you do not have to worry about manually creating links between records. Those will be discovered for you automatically based on properties and property values.
+
 Demo
 ----
 
