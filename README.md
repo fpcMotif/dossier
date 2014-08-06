@@ -7,7 +7,7 @@ August 5, 2014
 Overview
 --------
 
-This is a rough and early implementation of an idea I had for producing a wiki-like site from a simply structured database.
+This is a rough and early implementation of an idea I had for producing a wiki-like site from a simply structured database of records with freeform key/value pairs.
 
 Demo
 ----
@@ -23,9 +23,11 @@ Objects in the database are known as "entities".  An entity could be a person, p
 
 Each entity can have 0 or more "properties".  Properties are simply key/value pairs.
 
-An example entity might be "Bill Gates".  This entity might have a property named "Company" containing the value "Microsoft".
+An example entity might be "Bill Gates".  This entity might have a property named "Company" containing the value "Microsoft".  As your data set grows, you can follow the "Microsoft" link back to any entity which uses it as a property value to, say, generate a list of Microsoft employees.
 
 Other than this basic schema, the data is completely freeform.
+
+Properties have one additional field, called "extra", which can be used to add a short annotation for the key/value pair.  Going back to our "Bill Gates" entity example, we might add an extra to his "Company" property containing the years he functioned as CEO of the company.  Extras are displayed on the site just below the property value they belong to.
 
 Usage
 -----
