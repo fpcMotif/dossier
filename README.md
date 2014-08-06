@@ -44,6 +44,11 @@ Installation
 1. Edit db.php to reflect your database configuration.
 1. Visit in a web browser
 
+Data formatting recommendations
+-------------------------------
+
+For dates, use YYYY-MM-DD format.
+
 To-do
 -----
 
