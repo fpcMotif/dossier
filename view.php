@@ -5,7 +5,7 @@
 require 'head.php';
 require 'db.php';
 
-echo "<h1><a href=\"index.php\">Dossier</a></h1>\n";
+echo "<header><a href=\"index.php\">Dossier</a></header>\n";
 
 $id = isset($_REQUEST['id']) ? $_REQUEST['id'] : '';
 $sql_id = mysqli_real_escape_string($db, $id);
@@ -20,42 +20,43 @@ if ( $id == '' && $k != '' && v != '' )
 {
 	// K&V lookup
 	
-	echo "<h2>"; 
+	echo "<h1>"; 
 	echo htmlentities("$k: $v");
-	echo "</h2>";
+	echo "</h1>";
 	
 	$result = mysqli_query($db, "SELECT * FROM entities AS e LEFT JOIN properties AS p ON e.id = p.entity_id WHERE p.`key` = '$sql_k' AND p.`value` = '$sql_v' ORDER BY name");
 
-	echo "<table>";
+	echo "<ul>";
 	
 	while ( $row = mysqli_fetch_assoc($result) )
 	{
-		echo "<tr>";
-		echo "<td>";
+		echo "<li>";
+		
 		echo "<a href=\"view.php?id=";
 		echo rawurlencode($row['entity_id']);
 		echo "\">";
 		echo htmlentities($row['name']);
 		echo "</a>";
+		
 		echo " <span class=\"id\">[{$row['entity_id']}]</span>";
+		
 		if ( $row['extra'] != '' )
 			echo "<br>" . htmlentities($row['extra']);
-		echo "</td>";
-		echo "</tr>\n";
+
+		echo "</li>";
 	}
 
-	echo "</table>";
-
+	echo "</ul>";
+	
 	$sql_name = mysqli_real_escape_string($db, $v);
 	
 	$result = mysqli_query($db, "SELECT * FROM entities WHERE name = '$sql_name' ORDER BY name");
 
-	echo "<table>";
+	echo "<ul>";
 	
 	while ( $row = mysqli_fetch_assoc($result) )
 	{
-		echo "<tr>";
-		echo "<td>";
+		echo "<li>";
 		echo "<a href=\"view.php?id=";
 		echo rawurlencode($row['id']);
 		echo "\">";
@@ -64,11 +65,10 @@ if ( $id == '' && $k != '' && v != '' )
 		echo " <span class=\"id\">[{$row['id']}]</span>";
 		if ( $row['extra'] != '' )
 			echo "<br>" . htmlentities($row['extra']);
-		echo "</td>";
-		echo "</tr>\n";
+		echo "</li>\n";
 	}
 
-	echo "</table>";
+	echo "</ul>";
 }
 else 
 {
@@ -110,29 +110,35 @@ else
 	}
 	
 	echo "</table>";
-	
-	echo "<p>";
+
+	$related_count = 0;	
 
 	$result = mysqli_query($db, "SELECT * FROM entities AS e LEFT JOIN properties AS p ON e.id = p.entity_id WHERE p.value='$sql_value'");
-	
-	echo "<table>";
-	
+			
 	while ( $row = mysqli_fetch_assoc($result) )
 	{
-		echo "<tr>";
-		echo "<td>";
+		if ( $related_count == 0 )
+		{
+			echo "<h2>Related:</h2>";
+			echo "<ul>";
+		}
+		
+		++$related_count;
+		
+		echo "<li>";
 		echo "<a href=\"view.php?id=";
 		echo rawurlencode($row['entity_id']);
 		echo "\">";
 		echo htmlentities($row['name']);
 		echo "</a>";
 		echo " <span class=\"id\">[{$row['entity_id']}]</span>";
-		echo "</td>";
-		echo "</tr>\n";
+		echo "</li>\n";
 	}
 	
-	echo "</table>";
-
+	if ( $related_count > 0 )
+	{
+		echo "</ul>";
+	}
 }	
 
 require 'foot.php';

@@ -8,16 +8,29 @@
 				font-family: sans-serif;
 			}
 			
-			h1 {
+			header {
 				font-size: 20px;
+				font-weight: bold;
 			}
-
+			
 			h1 {
-				font-size: 18px;
+				margin-top: 8px;
+				padding-top: 0;
+				margin-bottom: 16px;
+				padding-bottom: 0;
+			}
+			
+			li {
+				margin-bottom: 4px;	
+			}
+			
+			table {
+				border: 1px solid black;
+				padding: 16px;
 			}
 			
 			td {
-				font-size: 13px;
+				font-size: 16px;
 			}
 			
 			td.key {	
@@ -27,7 +40,7 @@
 			}
 			
 			.id {
-				font-size: 80%;
+				font-size: 13px;
 			}
 		</style>
 	</head>
