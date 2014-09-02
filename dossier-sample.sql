@@ -116,6 +116,31 @@ VALUES
 UNLOCK TABLES;
 
 
+# Dump of table users
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `users`;
+
+CREATE TABLE `users` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(128) NOT NULL DEFAULT '',
+  `password_hash` varchar(128) NOT NULL DEFAULT '',
+  `session_token` varchar(128) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `username` (`username`),
+  KEY `session_token` (`session_token`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+
+INSERT INTO `users` (`id`, `username`, `password_hash`, `session_token`)
+VALUES
+	(1,'admin','insert-bcrypt-hash-here','');
+
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

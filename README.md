@@ -47,6 +47,7 @@ Installation
 
 1. Put all the PHP files in a folder somewhere web-accessible.
 1. Create a database and import the contents of dossier-sample.sql into it (if you want sample data).
+1. Edit the 'users' table to add a username and bcrypt-hashed password of your choice (sorry, no UI for this yet).
 1. Edit db.php to reflect your database configuration.
 1. Visit in a web browser
 

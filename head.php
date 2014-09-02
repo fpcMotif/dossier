@@ -3,6 +3,7 @@
 	<head>
 		<title>Dossier</title>
 		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<style>
 			body {
 				font-family: sans-serif;
@@ -42,6 +43,16 @@
 			.id {
 				font-size: 13px;
 			}
+			
+			.delete_link {
+				font-size: 11px;
+			}
+			
+			.extra {
+				font-size: 13px;
+				font-style: italic;
+			}
+			
 		</style>
 	</head>
 	<body>
