@@ -3,6 +3,9 @@
 require 'db.php';
 require 'auth.php';
 
+if ( ACCESS_CONTROL != 'public' )
+	require_auth();
+
 $id = isset($_POST['id']) ? $_POST['id'] : '';
 $key = isset($_POST['key']) ? $_POST['key'] : '';
 $value = isset($_POST['value']) ? $_POST['value'] : '';

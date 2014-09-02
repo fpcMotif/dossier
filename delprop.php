@@ -3,6 +3,9 @@
 require 'db.php';
 require 'auth.php';
 
+if ( ACCESS_CONTROL != 'public' )
+	require_auth();
+
 $entity_id = isset($_REQUEST['entity_id']) ? $_REQUEST['entity_id'] : '';
 $prop_id = isset($_REQUEST['prop_id']) ? $_REQUEST['prop_id'] : '';
 

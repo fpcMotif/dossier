@@ -4,10 +4,23 @@
 
 require 'head.php';
 require 'db.php';
+require 'auth.php';
 
 echo "<header><a href=\"index.php\">Dossier</a></header>\n";
 
-require 'auth.php';
+if ( ACCESS_CONTROL == 'private' )
+{
+	if ( has_auth() )
+	{
+		echo "<a href=\"logout.php\">Log out</a>";
+		echo "<p><hr>";
+	}
+	else
+	{
+		readfile('templates/login.html');
+		exit;
+	}
+}
 
 $id = isset($_REQUEST['id']) ? $_REQUEST['id'] : '';
 $sql_id = mysqli_real_escape_string($db, $id);
@@ -40,7 +53,7 @@ if ( $id == '' && $k != '' && $v != '' )
 		echo htmlentities($row['name']);
 		echo "</a>";
 		
-		echo " <span class=\"id\">[{$row['entity_id']}]</span>";
+// 		echo " <span class=\"id\">[{$row['entity_id']}]</span>";
 		
 		if ( $row['extra'] != '' )
 			echo "<br><span class=\"extra\">" . htmlentities($row['extra']) . "</span>";
@@ -73,7 +86,7 @@ if ( $id == '' && $k != '' && $v != '' )
 		echo "\">";
 		echo htmlentities($row['name']);
 		echo "</a>";
-		echo " <span class=\"id\">[{$row['id']}]</span>";
+//		echo " <span class=\"id\">[{$row['id']}]</span>";
 		echo "</li>\n";
 	}
 	
@@ -126,7 +139,7 @@ else
 
 	echo "<h1>"; 
 	echo htmlentities($row['name']);
-	echo " <span class=\"id\">[{$row['id']}]</span>";
+// 	echo " <span class=\"id\">[{$row['id']}]</span>";
 	echo "</h1>";
 
 	$sql_value = mysqli_real_escape_string($db, $row['name']);
@@ -160,9 +173,16 @@ else
 		echo htmlentities($row['value']);
 		echo "</a>";
 		
-		echo "&nbsp;&nbsp;<a class=\"delete_link\" href=\"delprop.php?prop_id={$row['id']}&entity_id={$row['entity_id']}\">[x]</a>";
+		if ( ACCESS_CONTROL == 'public' 
+			|| (ACCESS_CONTROL == 'read-only' && has_auth()) 
+			|| (ACCESS_CONTROL == 'private' && has_auth()) )
+		{	
+			echo "&nbsp;&nbsp;<a class=\"delete_link\" href=\"delprop.php?prop_id={$row['id']}&entity_id={$row['entity_id']}\">[x]</a>";
+		}
+		
 		if ( $row['extra'] != '' )
 			echo "<br><span class=\"extra\">" . htmlentities($row['extra']) . "</span>";
+			
 		echo "</td>";
 		echo "</tr>\n";
 	}
@@ -176,14 +196,19 @@ else
 		echo "No properties found.";
 	}
 	
-	echo "<p>";
-	echo "<form method=\"post\" action=\"addprop.php\">";
-	echo "<input type=\"hidden\" name=\"id\" value=\"$id\">";
-	echo "Key: <input type=\"text\" name=\"key\">";
-	echo "Value: <input type=\"text\" name=\"value\">";
-	echo "<br>Extra: <input type=\"text\" name=\"extra\">";
-	echo "<input type=\"submit\" value=\"Add Property\">";
-	echo "</form>";
+	if ( ACCESS_CONTROL == 'public' 
+		|| (ACCESS_CONTROL == 'read-only' && has_auth()) 
+		|| (ACCESS_CONTROL == 'private' && has_auth()) )
+	{	
+		echo "<p>";
+		echo "<form method=\"post\" action=\"addprop.php\">";
+		echo "<input type=\"hidden\" name=\"id\" value=\"$id\">";
+		echo "Key: <input type=\"text\" name=\"key\">";
+		echo "Value: <input type=\"text\" name=\"value\">";
+		echo "<br>Extra: <input type=\"text\" name=\"extra\">";
+		echo "<input type=\"submit\" value=\"Add Property\">";
+		echo "</form>";
+	}
 	
 	$related_count = 0;	
 
@@ -206,7 +231,7 @@ else
 		echo "\">";
 		echo htmlentities($row['name']);
 		echo "</a>";
-		echo " <span class=\"id\">[{$row['entity_id']}]</span>";
+//		echo " <span class=\"id\">[{$row['entity_id']}]</span>";
 		echo "</li>\n";
 	}
 	

@@ -4,10 +4,27 @@
 
 require 'head.php';
 require 'db.php';
+require 'auth.php';
 
 echo "<header>Dossier</header>";
 
-require 'auth.php';
+if ( ACCESS_CONTROL == 'private' )
+{
+	if ( has_auth() )
+	{
+		echo "<a href=\"logout.php\">Log out</a>";
+		echo "<p><hr>";
+	}
+	else
+	{
+		readfile('templates/login.html');
+		exit;
+	}
+}
+else if ( ACCESS_CONTROL == 'read-only' )
+{
+	readfile('templates/login.html');	
+}
 
 echo "<h1>Index</h1>";
 
@@ -23,15 +40,20 @@ while ( $row = mysqli_fetch_assoc($result) )
 	echo "<a href=\"view.php?id={$row['id']}\">";
 	echo "{$row['name']}";
 	echo "</a>";
-	echo " <span class=\"id\">[{$row['id']}]</span>";
+//	echo " <span class=\"id\">[{$row['id']}]</span>";
 	echo "</li>";
 }
 
 echo "</ul>";
 
-echo "<form method=\"post\" action=\"addent.php\">";
-echo "<input type=\"text\" name=\"name\">";
-echo "<input type=\"submit\" value=\"Add Entity\">";
-echo "</form>";
+if ( ACCESS_CONTROL == 'public' 
+	|| (ACCESS_CONTROL == 'read-only' && has_auth()) 
+	|| (ACCESS_CONTROL == 'private' && has_auth()) )
+{	
+	echo "<form method=\"post\" action=\"addent.php\">";
+	echo "<input type=\"text\" name=\"name\">";
+	echo "<input type=\"submit\" value=\"Add Entity\">";
+	echo "</form>";
+}
 
 require 'foot.php';
