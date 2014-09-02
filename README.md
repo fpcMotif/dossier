@@ -76,6 +76,7 @@ September 2, 2014:
 - Added simple user authentication.
   - This requires a new table called 'users'. See updated sample SQL.
   - Edit the 'users' table so it contains a row with your desired username and a bcrypt-hashed password (sorry, there is no UI for this at this time)
+- Property keys are now hyperlinked. When clicked, they show all records where that property is defined, and what value it has.
 - Enables the ability to add and delete properties on an entity (requires authentication)
 - Enables the ability to add a new entity (requires authentication)
 - Fixed some PHP warnings, such as "use of undefined constant v"
