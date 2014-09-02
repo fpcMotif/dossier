@@ -80,6 +80,7 @@ September 2, 2014:
 - Enables the ability to add and delete properties on an entity (requires authentication)
 - Enables the ability to add a new entity (requires authentication)
 - Fixed some PHP warnings, such as "use of undefined constant v"
+- Added a meta viewport tag for mobile devices
 
 August 5, 2014: 
 
