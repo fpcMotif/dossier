@@ -68,4 +68,19 @@ Disclaimer
 
 This code was written in a hurry and is not the world's finest PHP code.  I don't guarantee its safety or performance.
 
+Change log
+----------
+
+September 2, 2014:
+
+- Added simple user authentication.
+  - This requires a new table called 'users'. See updated sample SQL.
+  - Edit the 'users' table so it contains a row with your desired username and a bcrypt-hashed password (sorry, there is no UI for this at this time)
+- Enables the ability to add and delete properties on an entity (requires authentication)
+- Enables the ability to add a new entity (requires authentication)
+- Fixed some PHP warnings, such as "use of undefined constant v"
+
+August 5, 2014: 
+
+- Initial release.
 
