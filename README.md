@@ -16,7 +16,7 @@ Like a wiki, you do not have to worry about manually creating links between reco
 Demo
 ----
 
-You can view a sample installation at:
+You can view a sample installation (without the editing features) at:
 
 <http://stevenf.com/dossier-sample/>
 
