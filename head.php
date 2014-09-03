@@ -39,11 +39,7 @@
 				text-align: right;
 				font-weight: bold;
 			}
-			
-			.id {
-				font-size: 13px;
-			}
-			
+						
 			.delete_link {
 				font-size: 11px;
 			}

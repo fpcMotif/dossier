@@ -59,7 +59,7 @@ For dates, use YYYY-MM-DD format.
 To-do
 -----
 
-There's tons to be done.  Pretty much nothing is here except the core concept.  For example, there's no way currently to edit the database through the web interface -- you have to edit the database directly.
+There's tons to be done.  Pretty much nothing is here except the core concept.  The project is particularly in need of a good designer.
 
 Feel free to fork and pitch in on any feature that seems interesting to you.
 

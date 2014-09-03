@@ -40,15 +40,14 @@ while ( $row = mysqli_fetch_assoc($result) )
 	echo "<a href=\"view.php?id={$row['id']}\">";
 	echo "{$row['name']}";
 	echo "</a>";
-//	echo " <span class=\"id\">[{$row['id']}]</span>";
 	echo "</li>";
 }
 
 echo "</ul>";
 
 if ( ACCESS_CONTROL == 'public' 
-	|| (ACCESS_CONTROL == 'read-only' && has_auth()) 
-	|| (ACCESS_CONTROL == 'private' && has_auth()) )
+		|| (ACCESS_CONTROL == 'read-only' && has_auth()) 
+		|| (ACCESS_CONTROL == 'private' && has_auth()) )
 {	
 	echo "<form method=\"post\" action=\"addent.php\">";
 	echo "<input type=\"text\" name=\"name\">";

@@ -7,6 +7,7 @@ if ( ACCESS_CONTROL != 'public' )
 	require_auth();
 
 $name = isset($_POST['name']) ? $_POST['name'] : '';
+$sql_name = mysqli_real_escape_string($db, $name);
 
 if ( $name == '' )
 {
@@ -14,7 +15,7 @@ if ( $name == '' )
 	exit;
 }
 
-$q = "INSERT INTO entities (name) VALUES ('" . mysqli_real_escape_string($db, $name) . "')";
+$q = "INSERT INTO entities (name) VALUES ('$sql_name')";
 
 mysqli_query($db, $q) or die(mysql_error());
 

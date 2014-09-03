@@ -52,9 +52,7 @@ if ( $id == '' && $k != '' && $v != '' )
 		echo "\">";
 		echo htmlentities($row['name']);
 		echo "</a>";
-		
-// 		echo " <span class=\"id\">[{$row['entity_id']}]</span>";
-		
+				
 		if ( $row['extra'] != '' )
 			echo "<br><span class=\"extra\">" . htmlentities($row['extra']) . "</span>";
 
@@ -86,7 +84,6 @@ if ( $id == '' && $k != '' && $v != '' )
 		echo "\">";
 		echo htmlentities($row['name']);
 		echo "</a>";
-//		echo " <span class=\"id\">[{$row['id']}]</span>";
 		echo "</li>\n";
 	}
 	
@@ -116,9 +113,7 @@ else if ( $id == '' && $k != '' && $v == '' )
 		echo "\">";
 		echo htmlentities($row['name']);
 		echo "</a>";
-		
-		//echo " <span class=\"id\">[{$row['entity_id']}]</span>";
-		
+				
 		echo ": {$row['value']}";
 		
 		if ( $row['extra'] != '' )
@@ -139,7 +134,6 @@ else
 
 	echo "<h1>"; 
 	echo htmlentities($row['name']);
-// 	echo " <span class=\"id\">[{$row['id']}]</span>";
 	echo "</h1>";
 
 	$sql_value = mysqli_real_escape_string($db, $row['name']);
@@ -174,8 +168,8 @@ else
 		echo "</a>";
 		
 		if ( ACCESS_CONTROL == 'public' 
-			|| (ACCESS_CONTROL == 'read-only' && has_auth()) 
-			|| (ACCESS_CONTROL == 'private' && has_auth()) )
+				|| (ACCESS_CONTROL == 'read-only' && has_auth()) 
+				|| (ACCESS_CONTROL == 'private' && has_auth()) )
 		{	
 			echo "&nbsp;&nbsp;<a class=\"delete_link\" href=\"delprop.php?prop_id={$row['id']}&entity_id={$row['entity_id']}\">[x]</a>";
 		}
@@ -197,8 +191,8 @@ else
 	}
 	
 	if ( ACCESS_CONTROL == 'public' 
-		|| (ACCESS_CONTROL == 'read-only' && has_auth()) 
-		|| (ACCESS_CONTROL == 'private' && has_auth()) )
+			|| (ACCESS_CONTROL == 'read-only' && has_auth()) 
+			|| (ACCESS_CONTROL == 'private' && has_auth()) )
 	{	
 		echo "<p>";
 		echo "<form method=\"post\" action=\"addprop.php\">";
@@ -231,13 +225,23 @@ else
 		echo "\">";
 		echo htmlentities($row['name']);
 		echo "</a>";
-//		echo " <span class=\"id\">[{$row['entity_id']}]</span>";
 		echo "</li>\n";
 	}
 	
 	if ( $related_count > 0 )
 	{
 		echo "</ul>";
+	}
+
+	if ( ACCESS_CONTROL == 'public' 
+			|| (ACCESS_CONTROL == 'read-only' && has_auth()) 
+			|| (ACCESS_CONTROL == 'private' && has_auth()) )
+	{	
+		echo "<p><hr>";
+		echo "<form method=\"post\" action=\"addent.php\">";
+		echo "<input type=\"text\" name=\"name\">";
+		echo "<input type=\"submit\" value=\"Add Entity\">";
+		echo "</form>";
 	}
 }	
 
