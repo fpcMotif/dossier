@@ -6,6 +6,11 @@ function has_auth()
 	
 	$session_token = isset($_SESSION['session_token']) ? $_SESSION['session_token'] : '';
 	$username = isset($_SESSION['username']) ? $_SESSION['username'] : '';
+
+	if ( $username == '' || $session_token == '' )
+	{
+		return false;
+	}	
 	
 	$q = "SELECT * FROM users WHERE session_token = '" . mysqli_real_escape_string($db, $session_token) . "'";
 	$result = mysqli_query($db, $q) or die(mysqli_error($db));
