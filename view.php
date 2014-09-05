@@ -6,21 +6,23 @@ require 'head.php';
 require 'db.php';
 require 'auth.php';
 
-echo "<header><a href=\"index.php\">Dossier</a></header>\n";
+echo "<header><a href=\"index.php\">Dossier</a> ";
 
 if ( ACCESS_CONTROL == 'private' )
 {
 	if ( has_auth() )
 	{
-		echo "<a href=\"logout.php\">Log out</a>";
-		echo "<p><hr>";
+		echo ": <a href=\"logout.php\">Log out</a>";
 	}
 	else
 	{
+		echo "</header>\n";
 		readfile('templates/login.html');
 		exit;
 	}
 }
+
+echo "</header>\n";
 
 $id = isset($_REQUEST['id']) ? $_REQUEST['id'] : '';
 $sql_id = mysqli_real_escape_string($db, $id);
@@ -41,11 +43,11 @@ if ( $id == '' && $k != '' && $v != '' )
 	
 	$result = mysqli_query($db, "SELECT * FROM entities AS e LEFT JOIN properties AS p ON e.id = p.entity_id WHERE p.`key` = '$sql_k' AND p.`value` = '$sql_v' ORDER BY name");
 
-	echo "<ul>";
+	echo "<table>";
 	
 	while ( $row = mysqli_fetch_assoc($result) )
 	{
-		echo "<li>";
+		echo "<tr><td>";
 		
 		echo "<a href=\"view.php?id=";
 		echo rawurlencode($row['entity_id']);
@@ -56,10 +58,10 @@ if ( $id == '' && $k != '' && $v != '' )
 		if ( $row['extra'] != '' )
 			echo "<br><span class=\"extra\">" . htmlentities($row['extra']) . "</span>";
 
-		echo "</li>";
+		echo "</td></tr>";
 	}
 
-	echo "</ul>";
+	echo "</table>";
 	
 	$sql_name = mysqli_real_escape_string($db, $v);
 	
@@ -71,25 +73,25 @@ if ( $id == '' && $k != '' && $v != '' )
 	{
 		if ( $row_count == 0 )
 		{
-			echo "<p><hr>";
+			echo "<p>";
 			echo "<h2>Exact match:</h2>";
-			echo "<ul>";
+			echo "<table>";
 		}
 		
 		++$row_count;
 		
-		echo "<li>";
+		echo "<tr><td>";
 		echo "<a href=\"view.php?id=";
 		echo rawurlencode($row['id']);
 		echo "\">";
 		echo htmlentities($row['name']);
 		echo "</a>";
-		echo "</li>\n";
+		echo "</td></tr>\n";
 	}
 	
 	if ( $row_count > 0 )
 	{
-		echo "</ul>";
+		echo "</table>";
 	}
 }
 else if ( $id == '' && $k != '' && $v == '' )
@@ -102,27 +104,36 @@ else if ( $id == '' && $k != '' && $v == '' )
 
 	$result = mysqli_query($db, "SELECT * FROM entities AS e LEFT JOIN properties AS p ON e.id = p.entity_id WHERE p.`key` = '$sql_k' ORDER BY e.name");
 
-	echo "<ul>";
+	echo "<table>";
 	
 	while ( ($row = mysqli_fetch_assoc($result)) != null )
 	{
-		echo "<li>";
+		echo "<tr><td class=\"key\">";
 		
 		echo "<a href=\"view.php?id=";
 		echo rawurlencode($row['entity_id']);
 		echo "\">";
 		echo htmlentities($row['name']);
 		echo "</a>";
+		
+		echo "</td>";
+		echo "<td>";
 				
-		echo ": {$row['value']}";
+		echo "<a href=\"view.php?k=";
+		echo rawurlencode($k);
+		echo "&v=";
+		echo rawurlencode($row['value']);
+		echo "\">";
+		echo " {$row['value']}";
+		echo "</a>";
 		
 		if ( $row['extra'] != '' )
 			echo "<br><span class=\"extra\">" . htmlentities($row['extra']) . "</span>";
 
-		echo "</li>";
+		echo "</td></tr>";
 	}
 
-	echo "</ul>";
+	echo "</table>";
 }
 else 
 {
@@ -156,7 +167,7 @@ else
 		echo "<a href=\"view.php?k=";
 		echo htmlentities($row['key']);
 		echo "\">{$row['key']}</a>";
-		echo ": ";
+//		echo ": ";
 		echo "</td>";
 		echo "<td>";
 		echo "<a href=\"view.php?k=";
@@ -194,7 +205,7 @@ else
 			|| (ACCESS_CONTROL == 'read-only' && has_auth()) 
 			|| (ACCESS_CONTROL == 'private' && has_auth()) )
 	{	
-		echo "<p>";
+		echo "<p><h2>Add property</h2>";
 		echo "<form method=\"post\" action=\"addprop.php\">";
 		echo "<input type=\"hidden\" name=\"id\" value=\"$id\">";
 		echo "Key: <input type=\"text\" name=\"key\">";
@@ -212,32 +223,32 @@ else
 	{
 		if ( $related_count == 0 )
 		{
-			echo "<p><hr>";
-			echo "<h2>Related records:</h2>";
-			echo "<ul>";
+			echo "<p>";
+			echo "<h2>Related entities</h2>";
+			echo "<table>";
 		}
 		
 		++$related_count;
 		
-		echo "<li>";
+		echo "<tr><td>";
 		echo "<a href=\"view.php?id=";
 		echo rawurlencode($row['entity_id']);
 		echo "\">";
 		echo htmlentities($row['name']);
 		echo "</a>";
-		echo "</li>\n";
+		echo "</td></tr>\n";
 	}
 	
 	if ( $related_count > 0 )
 	{
-		echo "</ul>";
+		echo "</table>";
 	}
 
 	if ( ACCESS_CONTROL == 'public' 
 			|| (ACCESS_CONTROL == 'read-only' && has_auth()) 
 			|| (ACCESS_CONTROL == 'private' && has_auth()) )
 	{	
-		echo "<p><hr>";
+		echo "<p><h2>Add entity</h2>";
 		echo "<form method=\"post\" action=\"addent.php\">";
 		echo "<input type=\"text\" name=\"name\">";
 		echo "<input type=\"submit\" value=\"Add Entity\">";
