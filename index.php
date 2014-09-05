@@ -28,7 +28,7 @@ else if ( ACCESS_CONTROL == 'read-only' )
 }
 
 echo "</header>";
-echo "<h1>Index</h1>";
+echo "<p><h1>Index</h1>";
 
 $result = mysqli_query($db, "SELECT * FROM entities ORDER BY name") or die(mysqli_error($db));
 
